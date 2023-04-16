@@ -4,10 +4,10 @@ import axios from 'axios'
 
 console.log(import.meta.env)
 const http = axios.create({
-  baseURL: 'https://api.openai.com/v1/chat',
+  baseURL: 'http://74.235.242.53:3000/langchain',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
+    // Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
     // 'OpenAI-Organization': import.meta.env.VITE_ORG_ID,
   }
 });
@@ -17,13 +17,13 @@ const res = ref('✅ The answer will be displayed here.')
 const btnText = ref(BTN_TEXT)
 const askAi = () => {
   btnText.value = 'Thinking...🤔'
-  http.post('/completions', {
-	  "model": "gpt-3.5-turbo",
-	  "messages": [{"role": "user", "content": content.value}],
-	  "temperature": 0.7
+  http.get('/conversationalRetrievalQA', {
+	  params: {
+      question: content.value,
+    }
 	}).then(function (response) {
     console.log(response);
-    res.value =  response.data.choices[0].message.content
+    res.value =  response.data;
   }).catch(function (error) {
     console.log(error);
   }).finally(() => {
