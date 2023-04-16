@@ -4,7 +4,7 @@ import axios from 'axios'
 
 console.log(import.meta.env)
 const http = axios.create({
-  baseURL: 'http://74.235.242.53:3000/langchain',
+  baseURL: '/langchain-api',
   headers: {
     'Content-Type': 'application/json',
     // Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
@@ -17,7 +17,7 @@ const res = ref('✅ The answer will be displayed here.')
 const btnText = ref(BTN_TEXT)
 const askAi = () => {
   btnText.value = 'Thinking...🤔'
-  http.get('/conversationalRetrievalQA', {
+  http.get('/langchain/conversationalRetrievalQA', {
 	  params: {
       question: content.value,
     }

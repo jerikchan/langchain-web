@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+      {
+          "source": "/langchain-api/:match*",
+          "destination": "http://74.235.242.53:3000/:match*"
+      }
+  ]
+}
