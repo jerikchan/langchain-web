@@ -7,6 +7,7 @@ const http = axios.create({
   baseURL: '/langchain-api',
   headers: {
     'Content-Type': 'application/json',
+    'accept': 'application/json',
     // Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
     // 'OpenAI-Organization': import.meta.env.VITE_ORG_ID,
   }
@@ -15,7 +16,12 @@ const content = ref('');
 const BTN_TEXT = 'Submit 🚀'
 const res = ref('✅ The answer will be displayed here.')
 const btnText = ref(BTN_TEXT)
+// http.get('/langchain/hello');
+
 const askAi = () => {
+  if (!content.value) {
+    return;
+  }
   btnText.value = 'Thinking...🤔'
   http.get('/langchain/conversationalRetrievalQA', {
 	  params: {
