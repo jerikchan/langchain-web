@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import axios from 'axios'
 
 console.log(import.meta.env)
@@ -13,16 +13,21 @@ const http = axios.create({
   }
 });
 const content = ref('');
-const BTN_TEXT = 'Submit 🚀'
 const res = ref('✅ The answer will be displayed here.')
-const btnText = ref(BTN_TEXT)
+const isThinking = ref(false);
+const btnText = computed(() => {
+  return isThinking.value ? 'Thinking...🤔' : 'Submit 🚀';
+})
 // http.get('/langchain/hello');
 
 const askAi = () => {
   if (!content.value) {
     return;
   }
-  btnText.value = 'Thinking...🤔'
+  if (isThinking.value) {
+    return;
+  }
+  isThinking.value = true;
   http.get('/langchain/conversationalRetrievalQA', {
 	  params: {
       question: content.value,
@@ -33,13 +38,13 @@ const askAi = () => {
   }).catch(function (error) {
     console.log(error);
   }).finally(() => {
-    btnText.value = BTN_TEXT
+    isThinking.value = false;
   })
 }
 </script>
 
 <template>
-  <h2>🤖️ My ChatGPT</h2>
+  <h2>🤖️ My Assistant Bot</h2>
   <div class="chat">
     <input class="input" placeholder="Ask me about...🌽" v-model="content" clear>
     <div class="button-block">
