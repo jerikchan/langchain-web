@@ -28,7 +28,7 @@ const askAi = () => {
     return;
   }
   isThinking.value = true;
-  http.get('/langchain/conversationalRetrievalQA', {
+  http.get('/langchain/answerRecord', {
 	  params: {
       question: content.value,
     }
